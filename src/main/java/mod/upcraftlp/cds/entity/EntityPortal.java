@@ -2,7 +2,6 @@ package mod.upcraftlp.cds.entity;
 
 import mod.upcraftlp.cds.Main;
 import mod.upcraftlp.cds.init.CorrelatedBlocks;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -18,7 +17,6 @@ public class EntityPortal extends Entity {
 
     @SideOnly(Side.CLIENT)
     public boolean rendering = false;
-    private static final Minecraft mc = Minecraft.getMinecraft();
 
     public EntityPortal(World world, BlockPos pos, EnumFacing facing) {
         this(world);

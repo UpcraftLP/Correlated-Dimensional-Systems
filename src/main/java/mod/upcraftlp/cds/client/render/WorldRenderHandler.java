@@ -92,13 +92,13 @@ public class WorldRenderHandler {
                 //setup
                 GameSettings settings = mc.gameSettings;
                 backupEntity = mc.getRenderViewEntity();
-                int widthBackup = mc.displayWidth;
-                int heightBackup = mc.displayHeight;
-                int thirdPersonBackup = settings.thirdPersonView;
-                boolean hideGuiBackup = settings.hideGUI;
-                int mipmapBackup = settings.mipmapLevels;
-                float fovBackup = settings.fovSetting;
-                int textureID = textures.get(portal);
+                final int widthBackup = mc.displayWidth;
+                final int heightBackup = mc.displayHeight;
+                final int thirdPersonBackup = settings.thirdPersonView;
+                final boolean hideGuiBackup = settings.hideGUI;
+                final int mipmapBackup = settings.mipmapLevels;
+                final float fovBackup = settings.fovSetting;
+                final int textureID = textures.get(portal);
 
                 //settings.fovSetting = 1.0F;  //TODO config
                 settings.thirdPersonView = 0;

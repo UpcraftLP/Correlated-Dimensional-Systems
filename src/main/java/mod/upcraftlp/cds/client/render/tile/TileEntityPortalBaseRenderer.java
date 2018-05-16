@@ -34,13 +34,19 @@ public class TileEntityPortalBaseRenderer extends TileEntitySpecialRenderer<Tile
 
         entityPortal.rendering = true;
 
+        GlStateManager.disableLighting();
+        GlStateManager.disableNormalize();
         GlStateManager.enableBlend();
-        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
-        GlStateManager.enableLighting();
+        //GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.00625F);
+        GlStateManager.enableCull();
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 15*16, 15*16);
+        GlStateManager.disableTexture2D();
+
         GlStateManager.pushMatrix();
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 15*16, 15*16);
+
             int textureID = WorldRenderHandler.textures.get(entityPortal);
             GlStateManager.bindTexture(textureID);
             //bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE); //FIXME why does regular bindTexture() work?!
@@ -73,8 +79,15 @@ public class TileEntityPortalBaseRenderer extends TileEntitySpecialRenderer<Tile
             tessellator.draw();
         }
         GlStateManager.popMatrix();
-        GlStateManager.disableLighting();
+        GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
+        GlStateManager.disableCull();
+        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
+        GlStateManager.enableNormalize();
+        GlStateManager.enableLighting();
+        GlStateManager.color(1F, 1F, 1F, 1F);
+        int light = te.getWorld().getCombinedLight(te.getPos(), 0);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)(light % 65536) / 1.0F, (float)(light / 65536) / 1.0F);
         entityPortal.rendering = false;
     }
 
