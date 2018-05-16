@@ -107,13 +107,13 @@ public class WorldRenderHandler {
                 rendering = true;
                 renderEntity = mc.player;
 
-                mc.displayWidth = ModConfig.quality / 2;
+                mc.displayWidth = ModConfig.quality * 2;
                 mc.displayHeight = ModConfig.quality;
                 mc.setRenderViewEntity(portal);
                 EntityRenderer entityRenderer = mc.entityRenderer;
                 entityRenderer.renderWorld(event.renderTickTime, System.nanoTime() + (1000000000L / Math.max(30, mc.gameSettings.limitFramerate)));
                 GlStateManager.bindTexture(textureID);
-                GL11.glCopyTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, 0, 0, ModConfig.quality / 2, ModConfig.quality, 0);
+                GL11.glCopyTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, 0, 0, ModConfig.quality * 2, ModConfig.quality, 0);
 
                 renderEntity = null;
                 rendering = false;
