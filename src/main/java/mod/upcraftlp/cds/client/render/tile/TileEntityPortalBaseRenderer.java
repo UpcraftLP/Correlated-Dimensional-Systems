@@ -22,19 +22,17 @@ public class TileEntityPortalBaseRenderer extends TileEntitySpecialRenderer<Tile
 
     @Override
     public void render(TileEntityPortalBase te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-
         super.render(te, x, y, z, partialTicks, destroyStage, alpha); //render custom name tag etc.
         if(TileEntityRendererDispatcher.instance.entity instanceof EntityPortal) return; //we don't want recursive loops!
         EntityPortal entityPortal = te.getPortalEntity(); //FIXME remove entity!
         if(entityPortal == null) return; //no destination set
-        if(!WorldRenderHandler.textures.containsKey(entityPortal)) {
+        if(!WorldRenderHandler.hasKey(entityPortal)) {
             WorldRenderHandler.generateTexture(entityPortal);
             return;
         }
         //if(!state.shouldSideBeRendered(getWorld(), te.getPos(), state.getValue(BlockPortalBase.FACING))) return; //no need to render invisible stuff //TODO implement shouldSideBeRendered
 
         entityPortal.rendering = true;
-
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.enableAlpha();
@@ -44,7 +42,7 @@ public class TileEntityPortalBaseRenderer extends TileEntitySpecialRenderer<Tile
         GlStateManager.pushMatrix();
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            int textureID = WorldRenderHandler.textures.get(entityPortal);
+            int textureID = WorldRenderHandler.getValue(entityPortal);
             GlStateManager.bindTexture(textureID);
             //bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE); //FIXME why does regular bindTexture() work?!
 
