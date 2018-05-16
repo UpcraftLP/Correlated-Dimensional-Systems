@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -38,7 +39,7 @@ public class TileEntityPortalBase extends TileEntity {
 
     /**
      * used to get the destination portal entity for easy rendering
-     * @return the entity or {@code null} if there is no destination
+     * @return the entity or {@code null} if there is no destination in range
      */
     @Nullable
     @SideOnly(Side.CLIENT)
@@ -58,13 +59,8 @@ public class TileEntityPortalBase extends TileEntity {
     }
 
     @Override
-    public boolean shouldRenderInPass(int pass) {
-        return true;
-    }
-
-    @Override
-    public boolean hasFastRenderer() {
-        return super.hasFastRenderer();
+    public AxisAlignedBB getRenderBoundingBox() {
+        return this.getPortalEntity() == null ? new AxisAlignedBB(this.getPos()) : new AxisAlignedBB(this.getPos()).expand(this.getWidth(), this.getHeight(), this.getWidth()); //TODO better AABB based on facing and use actual size
     }
 
     public float getFacingAngle() {
